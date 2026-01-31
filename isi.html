@@ -19,11 +19,9 @@
 
 <body>
     <!-- HERO SECTION -->
-    <!-- Background Music -->
-    <iframe id="ytMusic" width="0" height="0"
-        src="https://www.youtube.com/embed/cxaBr58RgQM?autoplay=1&mute=1&loop=1&playlist=cxaBr58RgQM" allow="autoplay">
-    </iframe>
-
+    <audio id="bgMusic" loop>
+        <source src="assets/audio/sampai-jadi-debu.mp3" type="audio/mpeg">
+    </audio>
 
     <section class="section-padding d-flex align-items-center justify-content-center wedding-hero">
         <div class="container">
@@ -440,13 +438,11 @@
             document.getElementById('wishName').value = '';
             document.getElementById('wishMessage').value = '';
         }
-    </script>
 
-    <script>
-        document.addEventListener('click', function enableSound() {
-            const iframe = document.getElementById('ytMusic');
-            iframe.src = iframe.src.replace('mute=1', 'mute=0');
-            document.removeEventListener('click', enableSound);
+        document.addEventListener('click', function playMusicOnce() {
+            const audio = document.getElementById('bgMusic');
+            audio.play().catch(() => {});
+            document.removeEventListener('click', playMusicOnce);
         });
     </script>
 
