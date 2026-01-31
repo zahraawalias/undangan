@@ -8,7 +8,9 @@
 
     <!-- External Dependencies -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;600&display=swap"
+        rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -18,14 +20,10 @@
 <body>
     <!-- HERO SECTION -->
     <!-- Background Music -->
-    <iframe
-        width="0"
-        height="0"
-        src="https://www.youtube.com/embed/cxaBr58RgQM?autoplay=1&mute=0&loop=1&playlist=cxaBr58RgQM"
-        frameborder="0"
-        allow="autoplay; encrypted-media"
-        allowfullscreen>
+    <iframe id="ytMusic" width="0" height="0"
+        src="https://www.youtube.com/embed/cxaBr58RgQM?autoplay=1&mute=1&loop=1&playlist=cxaBr58RgQM" allow="autoplay">
     </iframe>
+
 
     <section class="section-padding d-flex align-items-center justify-content-center wedding-hero">
         <div class="container">
@@ -36,7 +34,8 @@
                             The Wedding of
                         </h3>
 
-                        <div class="photo-container mx-auto mb-4" data-aos="flip-up" data-aos-duration="1500" data-aos-delay="1000">
+                        <div class="photo-container mx-auto mb-4" data-aos="flip-up" data-aos-duration="1500"
+                            data-aos-delay="1000">
                             <img src="assets/images/pasangan.jpg" alt="Budi & Shinta" class="img-fluid wedding-frame">
                         </div>
 
@@ -44,7 +43,8 @@
                             Budi & Shinta
                         </h3>
 
-                        <p class="text-center text-white fw-semibold pt-3" style="font-family: 'Playfair Display', serif;">
+                        <p class="text-center text-white fw-semibold pt-3"
+                            style="font-family: 'Playfair Display', serif;">
                             Minggu, 01 Januari 2026
                         </p>
                     </div>
@@ -105,7 +105,8 @@
                 Kami Bermaksud Menyelenggarakan Pernikahan Kami</p>
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-md-8">
-                    <div class="card card-event p-4 mb-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="card card-event p-4 mb-4" data-aos="fade-up" data-aos-duration="1000"
+                        data-aos-delay="200">
                         <h4>Akad Nikah</h4>
                         <p class="mb-1"><strong>Senin, 27 Januari 2026</strong></p>
                         <p class="mb-2">Pukul 09.00 - 11.00 WIB</p>
@@ -440,6 +441,15 @@
             document.getElementById('wishMessage').value = '';
         }
     </script>
+
+    <script>
+        document.addEventListener('click', function enableSound() {
+            const iframe = document.getElementById('ytMusic');
+            iframe.src = iframe.src.replace('mute=1', 'mute=0');
+            document.removeEventListener('click', enableSound);
+        });
+    </script>
+
 </body>
 
 </html>
