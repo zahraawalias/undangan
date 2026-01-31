@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan - Budi & Shinta</title>
+
+    <!-- External Dependencies -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <audio id="bgMusic" loop>
+        <source src="assets/audio/wedding.mp3" type="audio/mpeg">
+    </audio>
+
+</head>
+
+<body>
+    <!-- Hero Section -->
+    <section class="hero d-flex align-items-center justify-content-center min-vh-100 wedding-hero">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 col-lg-8">
+                    <div class="hero-content text-center">
+                        <!-- Subtitle -->
+                        <h4 class="hero-subtitle mb-3" data-aos="fade-down" data-aos-duration="1000" data-aos-delay="200">
+                            The Wedding of
+                        </h4>
+
+                        <!-- Bride & Groom Names -->
+                        <h3 class="bride-groom mb-4" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="600">
+                            Budi & Shinta
+                        </h3>
+
+                        <!-- Photo -->
+                        <div class="photo-container mx-auto mb-4" data-aos="flip-up" data-aos-duration="1500" data-aos-delay="1000">
+                            <img src="assets/images/pasangan.jpg" alt="Budi & Shinta" class="img-fluid wedding-frame">
+                        </div>
+
+                        <!-- Guest Info -->
+                        <div class="person-info">
+                            <p class="greeting mb-2 text-white" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1400">
+                                Kepada Yth.
+                            </p>
+                            <h5 class="guest-name mb-3 text-white" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1600">
+                                Al Madani 16
+                            </h5>
+                            <p class="invitation-text px-3 px-md-5 text-white" style="font-size: 12px; font-weight: 600;" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1800">
+                                Dengan penuh kebahagiaan, kami mengundang Anda untuk hadir dan memberikan doa restu dalam pernikahan kami
+                            </p>
+                        </div>
+
+                        <!-- Open Invitation Button -->
+                        <a href="isi.php" class="btn btn-instagram btn-lg mt-4" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="2000">
+                            <i class="bi bi-envelope-heart"></i> Buka Undangan
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS Animation
+        AOS.init({
+            duration: 1200,
+            once: false,
+            offset: 50,
+            easing: 'ease-in-out',
+            mobile: true
+        });
+
+        // Refresh AOS on scroll for mobile optimization
+        window.addEventListener('scroll', function() {
+            AOS.refresh();
+        });
+    </script>
+</body>
+
+</html>

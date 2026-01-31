@@ -1,0 +1,924 @@
+/* ========================================
+           RESET & BASE STYLES
+           ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: 'Montserrat', 'Inter', sans-serif;
+    overflow-x: hidden;
+    background-color: #f8f4f1;
+    color: #4a4a4a;
+    line-height: 1.6;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ========================================
+           TYPOGRAPHY
+           ======================================== */
+.bride-groom {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 6vw, 3rem);
+    margin-bottom: 20px;
+    color: white;
+}
+
+.hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(1.1rem, 4vw, 1.5rem);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #8b7355;
+    margin-top: 0;
+}
+
+.greeting {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 3.5vw, 1.2rem);
+    color: #6a6a6a;
+    font-weight: 300;
+}
+
+.invitation-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(0.85rem, 2.6vw, 1rem);
+    line-height: 1.8;
+    color: #6a6a6a;
+    font-weight: 300;
+    max-width: 620px;
+    margin: 0 auto;
+}
+
+/* ========================================
+           WEDDING HERO SECTION
+           ======================================== */
+.wedding-hero {
+    min-height: 120vh;
+    background-image: url('assets/images/wedding.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+/* ========================================
+           PHOTO CONTAINER & FRAME
+           ======================================== */
+.photo-container {
+    max-width: 300px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
+.wedding-frame {
+    width: 100%;
+    height: auto;
+    border: 0.5px solid #ffffff;
+    border-radius: 70px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    padding: 5px;
+    background: #fff;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wedding-frame:hover {
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+/* ========================================
+           ABOUT SECTION
+           ======================================== */
+.about-section {
+    position: relative;
+    background-image: url('assets/images/wedding.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    overflow: hidden;
+}
+
+.about-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(3px);
+    z-index: 1;
+}
+
+.about-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+.about-section h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(1.2rem, 4vw, 1.6rem);
+    color: #333;
+    letter-spacing: 1px;
+}
+
+.about-section .bride-groom {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 5vw, 2.3rem);
+    margin-bottom: 6px;
+    color: #d4a373;
+}
+
+.about-section p.mb-1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: clamp(0.95rem, 3vw, 1.1rem);
+    line-height: 1.6;
+    color: #6a6a6a;
+}
+
+/* ========================================
+           BUTTONS
+           ======================================== */
+.btn-instagram {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 6px 16px;
+    border-radius: 30px;
+    color: #8b7355;
+    border: 1px solid rgba(139, 115, 85, 0.62);
+    background: rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-instagram i {
+    font-size: 1rem;
+}
+
+.btn-instagram:hover {
+    background: #d4a373;
+    color: #ffffff;
+    border-color: #d4a373;
+    transform: translateY(-2px);
+}
+
+.btn-instagram:active {
+    transform: translateY(0);
+}
+
+/* ========================================
+           WEDDING EVENT SECTION
+           ======================================== */
+.wedding-event {
+    background: #faf8f5;
+    color: #333;
+    padding: 80px 0;
+}
+
+.wedding-event h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 7vw, 3rem);
+    color: #5a4a3a;
+    margin-bottom: 40px;
+}
+
+.wedding-event p {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: clamp(0.95rem, 3vw, 1.1rem);
+    line-height: 1.6;
+}
+
+.card-event {
+    background-image: url('assets/images/wedding.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    padding: 30px;
+    margin-bottom: 20px;
+}
+
+.card-event:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+.card-event,
+.card-event h4,
+.card-event p {
+    color: #212529;
+}
+
+.card-event h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin-bottom: 15px;
+}
+
+.card-event p {
+    font-size: clamp(0.95rem, 3vw, 1.05rem);
+    line-height: 1.7;
+}
+
+/* ========================================
+           COUNTDOWN SECTION
+           ======================================== */
+.couple-countdown-section {
+    position: relative;
+    min-height: 100vh;
+    background: url("assets/images/pasangan.jpg") center / cover no-repeat;
+    display: flex;
+    align-items: flex-end;
+}
+
+.countdown-overlay {
+    width: 100%;
+    padding: 80px 20px 100px;
+    background: linear-gradient(to top,
+            rgba(255, 255, 255, 0.95) 0%,
+            rgba(255, 255, 255, 0.75) 40%,
+            rgba(255, 255, 255, 0.0) 100%);
+}
+
+.countdown-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 4vw, 1.6rem);
+    padding-top: 20px;
+    font-style: italic;
+    color: #5a4a3a;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.count-box {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 14px;
+    padding: 12px 6px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+}
+
+.count-box span {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #5a4a3a;
+    display: block;
+}
+
+.count-box small {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #8b7355;
+}
+
+/* ========================================
+           LOVE STORY SECTION
+           ======================================== */
+.love-story-section {
+    padding: 100px 20px;
+    background-image: url('assets/images/wedding.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.love-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    color: #5a4a3a;
+}
+
+.love-story-wrapper {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.story-arrow {
+    position: absolute;
+    left: -50px;
+    top: 0;
+    font-size: 1.6rem;
+    color: #d4a373;
+    transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+}
+
+.story-arrow i {
+    animation: arrowPulse 1s infinite ease-in-out;
+}
+
+@keyframes arrowPulse {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(6px);
+    }
+}
+
+.story-item {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+    padding: 30px;
+    background: #faf8f5;
+    border-left: 3px solid #e6dfd6;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.story-item.active {
+    opacity: 1;
+    transform: translateY(0);
+    border-color: #d4a373;
+}
+
+.story-item .chapter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #8b7355;
+}
+
+.story-item h4 {
+    font-family: 'Playfair Display', serif;
+    margin: 10px 0;
+    color: #5a4a3a;
+}
+
+.story-item p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: #6a6a6a;
+    line-height: 1.7;
+}
+
+.story-item {
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+        opacity 0.6s ease,
+        transform 0.6s ease;
+}
+
+.story-item.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* delay bertahap */
+.story-item:nth-child(1) {
+    transition-delay: 0s;
+}
+
+.story-item:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.story-item:nth-child(3) {
+    transition-delay: 0.4s;
+}
+
+
+/* ========================================
+           GALLERY SECTION
+           ======================================== */
+.gallery-section {
+    padding: 100px 0;
+    background-image: url('assets/images/wedding.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.gallery-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.9rem, 5vw, 2.4rem);
+    color: #5a4a3a;
+}
+
+.gallery-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    color: #8b7355;
+}
+
+.gallery-album {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.gallery-card {
+    border-radius: 18px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.gallery-card img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    display: block;
+}
+
+@media (hover: hover) {
+    .gallery-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12), 0 6px 18px rgba(0, 0, 0, 0.08);
+    }
+}
+
+/* ========================================
+           GIFT SECTION
+           ======================================== */
+.gift-section {
+    padding: 100px 0;
+    background-image: url('assets/images/wedding.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.gift-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 2.3rem);
+    color: #5a4a3a;
+}
+
+.gift-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    color: #6a6a6a;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.btn-gift {
+    background: #d4a373;
+    color: #fff;
+    border: none;
+    padding: 10px 26px;
+    border-radius: 30px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.btn-gift:hover {
+    background: #c08d5d;
+    transform: translateY(-2px);
+}
+
+.gift-content {
+    display: none;
+    animation: fadeSlide 0.5s ease;
+}
+
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.gift-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 18px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.gift-card i {
+    font-size: 1.8rem;
+    color: #d4a373;
+    margin-bottom: 10px;
+}
+
+.gift-card h5 {
+    font-family: 'Playfair Display', serif;
+    color: #5a4a3a;
+    margin-bottom: 6px;
+}
+
+.gift-card p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: #6a6a6a;
+    margin: 0;
+}
+
+.btn-copy {
+    margin-top: 12px;
+    background: transparent;
+    border: 1px dashed #d4a373;
+    color: #d4a373;
+    padding: 8px 18px;
+    border-radius: 20px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    font-size: 0.75rem;
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1;
+
+    transition: all 0.3s ease;
+}
+
+.btn-copy i {
+    font-size: 0.85rem;
+    line-height: 1;
+    padding-top: 5px;
+}
+
+
+.btn-copy:hover {
+    background: #d4a373;
+    color: #fff;
+}
+
+/* ========================================
+           WISH SECTION (FIXED)
+           ======================================== */
+
+.wish-section {
+    padding: 70px 20px;
+}
+
+/* panel background */
+.wish-bg {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 30px;
+    border-radius: 40px;
+
+    background-image: url('assets/images/wedding.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    position: relative;
+    overflow: hidden;
+}
+
+/* overlay biar teks kebaca */
+.wish-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+}
+
+/* konten di atas overlay */
+.wish-bg>* {
+    position: relative;
+    z-index: 1;
+}
+
+/* title */
+.wish-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 2.3rem);
+    color: #5a4a3a;
+}
+
+.wish-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    color: #8b7355;
+    margin-bottom: 50px;
+}
+
+/* form */
+.wish-form {
+    max-width: 420px;
+    margin: 0 auto 50px;
+    text-align: center;
+}
+
+.wish-form input,
+.wish-form textarea {
+    width: 100%;
+    border: 1px solid #e0d6cc;
+    border-radius: 16px;
+    padding: 12px 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+    outline: none;
+    background: #fff;
+}
+
+.wish-form input:focus,
+.wish-form textarea:focus {
+    border-color: #d4a373;
+}
+
+/* button */
+.btn-wish {
+    background: #d4a373;
+    color: #fff;
+    border: none;
+    padding: 10px 32px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.btn-wish:hover {
+    background: #c08d5d;
+    transform: translateY(-2px);
+}
+
+/* wish list */
+.wish-list {
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.wish-item {
+    background: #faf8f5;
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.06),
+        0 3px 8px rgba(0, 0, 0, 0.04);
+    animation: fadeWish 0.4s ease;
+}
+
+@keyframes fadeWish {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.wish-item h6 {
+    font-family: 'Playfair Display', serif;
+    color: #5a4a3a;
+    margin-bottom: 6px;
+}
+
+.wish-item p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    color: #6a6a6a;
+    margin: 0;
+}
+
+
+
+/* ========================================
+           CLOSING SECTION
+           ======================================== */
+.closing-section {
+    padding: 120px 0 100px;
+    background: linear-gradient(to bottom, #faf8f5 0%, #fff 100%);
+}
+
+.closing-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    color: #6a6a6a;
+    max-width: 700px;
+    margin: 0 auto 30px;
+    line-height: 1.8;
+}
+
+.closing-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.9rem, 5vw, 2.5rem);
+    color: #5a4a3a;
+    margin-bottom: 20px;
+}
+
+.closing-names {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    color: #d4a373;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.closing-names span:nth-child(2) {
+    font-size: 1.4rem;
+    align-self: center;
+}
+
+.closing-family {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: #8b7355;
+    margin-bottom: 30px;
+}
+
+.closing-divider {
+    width: 80px;
+    height: 2px;
+    background: #d4a373;
+    margin: 0 auto 24px;
+    border-radius: 2px;
+}
+
+.closing-thanks {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: #6a6a6a;
+}
+
+/* ========================================
+           FOOTER
+           ======================================== */
+footer {
+    background: #5a4a3a;
+    color: #f8f4f1;
+    font-size: clamp(0.85rem, 3vw, 1rem);
+    padding: 30px 20px;
+    text-align: center;
+}
+
+footer p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* ========================================
+           UTILITIES
+           ======================================== */
+.section-padding {
+    padding: 80px 20px;
+}
+
+/* ========================================
+           RESPONSIVE DESIGN
+           ======================================== */
+@media (max-width: 992px) {
+    .gallery-album {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+
+    .wedding-hero,
+    .about-section,
+    .card-event {
+        background-attachment: scroll;
+    }
+
+    .countdown-overlay {
+        padding: 60px 15px 80px;
+    }
+
+    .count-box span {
+        font-size: 1.3rem;
+    }
+
+    .story-arrow {
+        left: -30px;
+    }
+
+    .section-padding {
+        padding: 50px 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .bride-groom {
+        font-size: clamp(2.3rem, 6vw, 2rem);
+        letter-spacing: 1px;
+    }
+
+    .photo-container {
+        max-width: 160px;
+        margin: 20px auto;
+    }
+
+    .wedding-frame {
+        border-width: 1px;
+    }
+
+    .card-event {
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    .gallery-album {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gallery-card img {
+        height: 240px;
+    }
+
+    .closing-section {
+        padding: 90px 0 80px;
+    }
+
+    .closing-names {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    footer {
+        padding: 25px 15px;
+    }
+
+    .section-padding {
+        padding: 40px 10px;
+    }
+}
+
+/* ========================================
+           ACCESSIBILITY & PERFORMANCE
+           ======================================== */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+
+    .btn-instagram:hover,
+    .wedding-frame:hover,
+    .card-event:hover {
+        transform: none;
+    }
+}
+
+.btn-instagram:focus,
+.btn-instagram:focus-visible {
+    outline: 3px solid;
+    outline-offset: 3px;
+}
+
+a:focus-visible {
+    outline: 2px solid;
+    outline-offset: 2px;
+}
