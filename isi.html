@@ -3,9 +3,7 @@
   ============================================================
   UNDANGAN PERNIKAHAN DIGITAL — isi.html (isi undangan)
   Dibuka lewat tombol "Buka Undangan" di index.html.
-  Semua isi diambil otomatis dari Google Sheet lewat script.js —
-  tidak ada data contoh/dummy di file ini. Semua style ada di
-  style.css, tidak perlu edit file ini untuk urusan tampilan.
+  Semua isi diambil otomatis dari Google Sheet lewat script.js.
   ============================================================
 -->
 <html lang="id">
@@ -42,7 +40,13 @@
   <div class="app" id="app">
     <main id="mainContent">
 
-      <div class="section-main"  id="section-main">
+      <div class="section-main" id="section-main">
+        <!-- Bunga PNG beranimasi di atas -->
+        <div class="flower-top" aria-hidden="true">
+          <div class="flower-left"></div>
+          <div class="flower-right"></div>
+        </div>
+
         <!-- ================= FOTO BERDUA ================= -->
         <section class="section couple-photo-section">
           <div class="couple-photo-frame reveal" data-dir="scale">
@@ -54,8 +58,9 @@
         <section class="section hero-section" id="heroSection">
           <div class="reveal" data-dir="up">
             <p class="eyebrow-script">Pernikahan Kami</p>
-            <h2 class="couple-names"><span id="heroGroom">Mempelai Pria</span> &amp; <span id="heroBride">Mempelai
-                Wanita</span></h2>
+            <h2 class="couple-names">
+              <span id="heroGroom">Mempelai Pria</span> &amp; <span id="heroBride">Mempelai Wanita</span>
+            </h2>
             <p class="hero-date" id="heroDate">Memuat tanggal...</p>
           </div>
         </section>
@@ -73,22 +78,18 @@
       </div>
 
       <!-- ================= QUOTE ================= -->
-      <!-- <div class="quote-bg"> -->
       <section class="section quote-section">
-        <!-- <div class="quote-mark reveal" data-dir="scale">&rdquo;</div> -->
         <p class="quote-text reveal" data-dir="up" id="quoteText">Memuat ayat...</p>
         <p class="quote-source reveal" data-dir="up" id="quoteSource">&rdquo;-&rdquo;</p>
       </section>
-      <!-- </div> -->
 
-      <!-- ================= OPENING TEXT ================= -->
+      <!-- ================= OPENING TEXT + COUPLE ================= -->
       <div class="opening-bg">
         <section class="section opening-section">
           <div class="divider-orn reveal" data-dir="scale"></div>
           <p class="opening-text reveal" data-dir="up" id="openingText">Memuat...</p>
         </section>
 
-        <!-- ================= COUPLE ================= -->
         <section class="section couple-section">
           <div class="person-card reveal" data-dir="right">
             <div class="person-photo" id="bridePhoto"></div>
@@ -128,16 +129,20 @@
       </section>
 
       <!-- ================= GALLERY ================= -->
-      <section class="section gallery-section" id="gallerySection">
-        <h2 class="section-title reveal" data-dir="up">Galeri</h2>
-        <div class="gallery-grid" id="galleryGrid"></div>
-      </section>
+<!-- ================= GALLERY ================= -->
+<section class="section gallery-section" id="gallerySection">
+  <h2 class="section-title reveal" data-dir="up">Galeri</h2>
+  <p class="gallery-sub reveal" data-dir="up">Momen yang kami abadikan</p>
+  <div class="gallery-grid" id="galleryGrid"></div>
+</section>
 
       <!-- ================= GIFT ================= -->
       <section class="section gift-section section-alt" id="giftSection">
         <h2 class="section-title reveal" data-dir="up">Kirim Hadiah</h2>
-        <p class="gift-desc reveal" data-dir="up">Doa restu Anda adalah karunia yang sangat berarti bagi kami. Namun
-          jika ingin memberi tanda kasih, Anda dapat mengirimkannya secara cashless melalui:</p>
+        <p class="gift-desc reveal" data-dir="up">
+          Doa restu Anda adalah karunia yang sangat berarti bagi kami. Namun
+          jika ingin memberi tanda kasih, Anda dapat mengirimkannya secara cashless melalui:
+        </p>
         <button class="btn-outline reveal" data-dir="up" id="btnToggleGift" type="button">Tampilkan Info Hadiah</button>
         <div class="gift-content" id="giftContent">
           <div class="bank-card reveal" data-dir="up">
@@ -184,17 +189,15 @@
       <section class="section closing-section">
         <div class="closing-photo reveal" data-dir="scale" id="closingPhoto"></div>
         <h2 class="reveal" data-dir="up" id="closingNames">Memuat...</h2>
-        <p class="closing-text reveal" data-dir="up">Terima kasih atas doa dan restu yang diberikan. Kehadiran serta doa
-          Bapak/Ibu/Saudara/i merupakan kebahagiaan bagi kami.</p>
+        <p class="closing-text reveal" data-dir="up">
+          Terima kasih atas doa dan restu yang diberikan. Kehadiran serta doa
+          Bapak/Ibu/Saudara/i merupakan kebahagiaan bagi kami.
+        </p>
       </section>
 
-      <!-- <footer class="footer">
-        <p>Dengan penuh cinta,</p>
-        <p id="footerNames">-</p>
-      </footer> -->
     </main>
   </div>
-  
+
   <div class="butterflies" id="butterflies" aria-hidden="true"></div>
 
   <nav class="quicknav" id="quicknav">
@@ -202,22 +205,18 @@
       <span class="quicknav-icon"><i data-lucide="house"></i></span>
       <span class="quicknav-label">Home</span>
     </a>
-
     <a href="#eventsSection" class="quicknav-item" data-target="eventsSection">
       <span class="quicknav-icon"><i data-lucide="calendar-days"></i></span>
       <span class="quicknav-label">Acara</span>
     </a>
-
     <a href="#gallerySection" class="quicknav-item" data-target="gallerySection">
       <span class="quicknav-icon"><i data-lucide="images"></i></span>
       <span class="quicknav-label">Galeri</span>
     </a>
-
     <a href="#giftSection" class="quicknav-item" data-target="giftSection">
       <span class="quicknav-icon"><i data-lucide="gift"></i></span>
       <span class="quicknav-label">Hadiah</span>
     </a>
-
     <a href="#rsvpSection" class="quicknav-item" data-target="rsvpSection">
       <span class="quicknav-icon"><i data-lucide="mail"></i></span>
       <span class="quicknav-label">RSVP</span>
@@ -226,16 +225,18 @@
 
   <audio id="bgMusic" loop preload="auto"></audio>
 
-  <div class="lightbox" id="lightbox">
-    <button id="lightboxClose" type="button" aria-label="Tutup">&times;</button>
-    <img id="lightboxImg" src="" alt="">
-  </div>
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Tutup">&times;</button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" type="button" aria-label="Sebelumnya">&#10094;</button>
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" type="button" aria-label="Berikutnya">&#10095;</button>
+  <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
+</div>
 
   <div class="toast" id="toast"></div>
 
   <script src="script.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-
   <script>
     lucide.createIcons();
   </script>

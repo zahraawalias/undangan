@@ -12,9 +12,7 @@
       sheet "Tamu"). Saat tombol "Buka Undangan" ditekan, tamu akan
       diarahkan ke isi.html dengan kode yang sama.
    4. Background pakai video (assets/images/background.mp4) dengan
-      fallback foto (assets/images/wedding.jpg) — tinggal ganti file
-      kamu sendiri. Semua style ada di style.css, tidak perlu edit
-      file ini untuk urusan tampilan.
+      fallback foto (assets/images/wedding.jpg).
   ============================================================
 -->
 <html lang="id">
@@ -34,20 +32,6 @@
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Dancing+Script:wght@500;600;700&family=Playfair+Display:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      margin: 0;
-      font-family: var(--sans);
-      color: var(--ink);
-      -webkit-font-smoothing: antialiased;
-      /* fallback kalau video background gagal dimuat / browser tidak
-     dukung / orang mengaktifkan "reduce motion" — pakai foto statis */
-      background-image: url('assets/images/wedding.jpg');
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-    }
-  </style>
 </head>
 
 <body class="page-cover">
@@ -59,9 +43,6 @@
     </div>
   </div>
 
-  <!-- <video class="bg-video" autoplay muted loop playsinline poster="assets/images/wedding.jpg">
-    <source src="assets/images/background.mp4" type="video/mp4">
-  </video> -->
   <div class="bg-video-overlay"></div>
   <div class="side-backdrop"></div>
   <div class="butterflies" id="butterflies" aria-hidden="true"></div>

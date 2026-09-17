@@ -1,18 +1,9 @@
 /* ============================================================
    UNDANGAN PERNIKAHAN DIGITAL — style.css
    Dipakai bersama oleh index.html (cover) dan isi.html (isi undangan)
-   Semua style — termasuk background video/foto & desain cover —
-   disatukan di sini biar nggak berantakan/beda-beda antar file.
-
-   v2: ditambahin lebih banyak animasi biar terasa lebih "mengalir"
-   (stagger yang lebih halus, hover lift, glow lembut di judul,
-   foto yang "bernafas", parallax ringan, transisi lightbox & toast
-   yang lebih hidup, countdown yang berdenyut tiap detik, dst).
    ============================================================ */
-/* Font "Breathing" nggak ada di Google Fonts (kemungkinan font Canva-only).
-   Kalau kamu punya file fontnya sendiri (.woff2), taruh di assets/fonts/
-   lalu aktifkan @font-face ini — kalau tidak, otomatis fallback ke
-   Dancing Script. */
+
+/* ---------- FONT BREATHING (opsional) ---------- */
 /*
 @font-face {
   font-family: 'Breathing';
@@ -22,6 +13,9 @@
 }
 */
 
+/* ============================================================
+   ROOT VARIABLES
+   ============================================================ */
 :root {
   --bg: #FBF6EC;
   --bg-alt: #F1E6C9;
@@ -39,7 +33,6 @@
   --maxw: 480px;
   --ease: cubic-bezier(.22, .61, .36, 1);
   --ease-soft: cubic-bezier(.16, .84, .44, 1);
-  /* warna khusus cover (teks gelap di atas foto/video terang) */
   --cover-ink: #1c2b50;
   --cover-ink-soft: #526997;
   --cover-card: rgba(247, 220, 221, .55);
@@ -63,8 +56,6 @@ body {
   background-size: cover;
 }
 
-/* Background beda per halaman — cover (index.html) pakai foto sendiri,
-   isi (isi.html) pakai foto lain. Ganti nama filenya sesuai punya kamu. */
 body.page-cover {
   background-image: url('assets/images/wedding.jpg');
 }
@@ -93,7 +84,9 @@ a {
   color: inherit;
 }
 
-/* ---------- desktop side backdrop (dimatikan biar video/foto terlihat) ---------- */
+/* ============================================================
+   BACKGROUND
+   ============================================================ */
 .side-backdrop {
   position: fixed;
   inset: 0;
@@ -101,7 +94,6 @@ a {
   background: none;
 }
 
-/* ---------- video background full-screen, di belakang semua konten ---------- */
 .bg-video {
   position: fixed;
   inset: 0;
@@ -121,9 +113,7 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bg-video {
-    display: none;
-  }
+  .bg-video { display: none; }
 }
 
 .app {
@@ -137,18 +127,158 @@ a {
   box-shadow: none;
 }
 
-/* ---------- shared section styles ---------- */
-
+/* ============================================================
+   SECTION MAIN — bunga PNG di atas, konten di bawah
+   ============================================================ */
 .section-main {
-  background-image: url('assets/images/wedding.jpg');
-  padding: 68px 28px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+  position: relative;
+  padding: 180px 28px 40px;
+  background: transparent;
+  overflow: hidden;
 }
 
+/* ---------- BUNGA ATAS (PNG beranimasi) ---------- */
+.flower-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  z-index: 2;
+  line-height: 0;
+}
+
+/* PNG utuh — mepet pinggir & naik sedikit ke atas */
+.flower-top::before {
+  content: '';
+  display: block;
+  width: 110%;
+  margin-left: -5%;
+  margin-top: -20px;
+  aspect-ratio: 1690 / 1090;
+  background-image: url('assets/images/bunga-atas.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: top center;
+  transform-origin: top center;
+  animation: flowerSway 6s ease-in-out infinite;
+  filter: drop-shadow(0 6px 12px rgba(46, 32, 19, .12));
+}
+
+/* Versi 2 PNG kiri & kanan terpisah (opsional) */
+.flower-left,
+.flower-right {
+  position: absolute;
+  top: 0;
+  width: 55%;
+  aspect-ratio: 845 / 1090;
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 6px 12px rgba(46, 32, 19, .12));
+  will-change: transform;
+}
+
+.flower-left {
+  left: 0;
+  background-image: url('assets/images/bunga-kiri.png');
+  background-position: top left;
+  transform-origin: top left;
+  animation: flowerSwayLeft 6s ease-in-out infinite;
+}
+
+.flower-right {
+  right: 0;
+  background-image: url('assets/images/bunga-kanan.png');
+  background-position: top right;
+  transform-origin: top right;
+  animation: flowerSwayRight 6.5s ease-in-out infinite;
+}
+
+/* ---------- ANIMASI GOYANG BUNGA ---------- */
+@keyframes flowerSway {
+  0%, 100% {
+    transform: rotate(-1.2deg) translateY(0);
+  }
+  50% {
+    transform: rotate(1.2deg) translateY(4px);
+  }
+}
+
+@keyframes flowerSwayLeft {
+  0%, 100% {
+    transform: rotate(-1.5deg) translate(-2px, 0);
+  }
+  50% {
+    transform: rotate(1deg) translate(2px, 5px);
+  }
+}
+
+@keyframes flowerSwayRight {
+  0%, 100% {
+    transform: rotate(1.5deg) translate(2px, 0);
+  }
+  50% {
+    transform: rotate(-1deg) translate(-2px, 5px);
+  }
+}
+
+/* Parallax ringan saat scroll */
+.section-main .flower-top {
+  will-change: transform;
+  transition: transform .1s linear;
+}
+
+/* ---------- Kelopak jatuh ---------- */
+.petal {
+  position: fixed;
+  top: -20px;
+  width: 14px;
+  height: 14px;
+  background-image: url('assets/images/petal.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 5;
+  opacity: .85;
+  animation: petalFall linear infinite;
+}
+
+.petal-fallback {
+  width: 10px;
+  height: 10px;
+  border-radius: 50% 0 50% 0;
+  background: linear-gradient(135deg, #ffc2d1 0%, #ff8fab 100%);
+  box-shadow: 0 2px 4px rgba(255, 143, 171, .3);
+}
+
+@keyframes petalFall {
+  0% {
+    transform: translateY(0) rotate(0deg) translateX(0);
+    opacity: 0;
+  }
+  10% { opacity: .85; }
+  50% {
+    transform: translateY(50vh) rotate(180deg) translateX(30px);
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg) translateX(-20px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flower-top::before,
+  .flower-left,
+  .flower-right { animation: none !important; }
+  .petal { display: none; }
+}
+
+/* ============================================================
+   SHARED SECTION STYLES
+   ============================================================ */
 .section {
-  padding: 64px 28px;
+  padding: 52px 28px;
   position: relative;
   text-align: center;
 }
@@ -158,8 +288,9 @@ a {
 }
 
 .eyebrow-script {
-  font-family: var(--serif);
-  font-style: italic;
+  font-family: var(--script);
+  font-weight: 600;
+  font-style: normal;
   font-size: 19px;
   color: var(--cover-ink);
   margin: 0 0 6px;
@@ -173,8 +304,37 @@ a {
   margin: 0 0 28px;
   color: var(--cover-ink);
   position: relative;
+  background: linear-gradient(100deg, var(--cover-ink) 40%, var(--gold) 50%, var(--cover-ink) 60%);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: nameShimmer 7s ease-in-out infinite;
 }
 
+@supports not (background-clip: text) {
+  .section-title {
+    color: var(--cover-ink);
+    animation: none;
+  }
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  margin: 12px auto 0;
+  animation: lineGrow 1.2s var(--ease-soft) forwards;
+  transform-origin: center;
+}
+
+@keyframes lineGrow {
+  from { transform: scaleX(0); opacity: 0; }
+  to { transform: scaleX(1); opacity: 1; }
+}
+
+/* ---------- divider ornamen ---------- */
 .divider-orn {
   width: 64px;
   height: 1px;
@@ -182,6 +342,8 @@ a {
   margin: 18px auto;
   position: relative;
   overflow: visible;
+  animation: dividerExpand 1.5s var(--ease-soft) forwards;
+  transform-origin: center;
 }
 
 .divider-orn::before {
@@ -196,14 +358,16 @@ a {
   animation: ornPulse 2.6s ease-in-out infinite;
 }
 
-@keyframes ornPulse {
+@keyframes dividerExpand {
+  from { width: 0; opacity: 0; }
+  to { width: 64px; opacity: 1; }
+}
 
-  0%,
-  100% {
+@keyframes ornPulse {
+  0%, 100% {
     transform: translate(-50%, -50%) rotate(45deg) scale(1);
     box-shadow: 0 0 0 0 rgba(184, 134, 43, .35);
   }
-
   50% {
     transform: translate(-50%, -50%) rotate(45deg) scale(1.25);
     box-shadow: 0 0 0 6px rgba(184, 134, 43, 0);
@@ -215,27 +379,16 @@ a {
   opacity: 0;
   filter: blur(6px);
   transition: opacity 1.05s var(--ease-soft),
-    transform 1.05s var(--ease-soft),
-    filter 1.05s var(--ease-soft);
+              transform 1.05s var(--ease-soft),
+              filter 1.05s var(--ease-soft);
   transition-delay: var(--d, 0s);
   will-change: opacity, transform, filter;
 }
 
-.reveal[data-dir="up"] {
-  transform: translateY(34px);
-}
-
-.reveal[data-dir="left"] {
-  transform: translateX(-52px);
-}
-
-.reveal[data-dir="right"] {
-  transform: translateX(52px);
-}
-
-.reveal[data-dir="scale"] {
-  transform: scale(.82);
-}
+.reveal[data-dir="up"] { transform: translateY(34px); }
+.reveal[data-dir="left"] { transform: translateX(-52px); }
+.reveal[data-dir="right"] { transform: translateX(52px); }
+.reveal[data-dir="scale"] { transform: scale(.82); }
 
 .reveal.is-visible {
   opacity: 1;
@@ -243,19 +396,18 @@ a {
   transform: translate(0, 0) scale(1);
 }
 
-@media (prefers-reduced-motion:reduce) {
+@media (prefers-reduced-motion: reduce) {
   .reveal {
     transition: opacity .3s linear;
     transform: none !important;
     filter: none !important;
   }
-
-  html {
-    scroll-behavior: auto;
-  }
+  html { scroll-behavior: auto; }
 }
 
-/* ---------- buttons ---------- */
+/* ============================================================
+   BUTTONS
+   ============================================================ */
 .btn-solid,
 .btn-outline,
 .btn-copy {
@@ -285,10 +437,28 @@ a {
   transition: transform .7s var(--ease);
 }
 
+.btn-solid::before,
+.btn-outline::before,
+.btn-copy::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, .25) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity .4s var(--ease);
+  pointer-events: none;
+}
+
 .btn-solid:hover::after,
 .btn-outline:hover::after,
 .btn-copy:hover::after {
   transform: translateX(120%);
+}
+
+.btn-solid:hover::before,
+.btn-outline:hover::before,
+.btn-copy:hover::before {
+  opacity: 1;
 }
 
 .btn-solid {
@@ -328,7 +498,9 @@ a {
   cursor: default;
 }
 
-/* ================= COVER (index.html) ================= */
+/* ============================================================
+   COVER (index.html)
+   ============================================================ */
 .cover {
   position: fixed;
   inset: 0;
@@ -340,8 +512,6 @@ a {
   text-align: center;
 }
 
-/* video/foto sudah tampil dari .bg-video di belakang — cover section
-   sendiri dibiarkan transparan supaya kelihatan langsung */
 .cover-bg {
   position: absolute;
   inset: 0;
@@ -354,17 +524,13 @@ a {
   background: none;
 }
 
-.cover-ornament {
-  display: none;
-}
-
 .cover-content {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 28px;
+  gap: 22px;
   height: 100%;
   width: 100%;
   max-width: 420px;
@@ -373,13 +539,8 @@ a {
 }
 
 .cover-title-block {
-  margin-bottom: 12vh;
-}
-
-.eyebrow-script {
-  font-family: var(--script);
-  font-weight: 600;
-  font-style: normal;
+  margin-bottom: 6vh;
+  width: 100%;
 }
 
 .cover .eyebrow-script {
@@ -414,15 +575,8 @@ a {
 }
 
 @keyframes nameShimmer {
-
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .couple-names-cover .amp {
@@ -442,32 +596,22 @@ a {
   margin: 0;
 }
 
-.cover-divider {
-  display: none;
-}
-
-/* kartu "kepada yth." — kotak bulat semi-transparan di bawah cover */
+/* kartu "kepada yth." — simetris dengan tombol */
 .cover-guestcard {
   background: var(--cover-card);
   backdrop-filter: blur(2px);
   border-radius: 18px;
-  padding: 32px 10px;
-  width: 85%;
+  padding: 28px 20px;
+  width: 100%;
+  max-width: 300px;
   text-align: center;
-  margin-top: 3vh;
+  margin: 0 auto;
   animation: cardFloat 5s ease-in-out infinite;
 }
 
 @keyframes cardFloat {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-6px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
 .to-label {
@@ -487,32 +631,30 @@ a {
   margin: 0;
 }
 
+/* tombol buka undangan — simetris dengan kartu */
 .btn-open {
-  margin-top: 0px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 300px;
   background: rgba(255, 255, 255, .55);
   border: 1px solid var(--cover-ink);
   color: var(--cover-ink);
-  padding: 10px 22px;
+  padding: 14px 22px;
   border-radius: 2px;
   font-size: 13px;
   letter-spacing: .08em;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   text-decoration: none;
   animation: openPulse 2.4s ease-in-out infinite;
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
 }
 
 @keyframes openPulse {
-
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(28, 43, 80, .18);
-  }
-
-  50% {
-    box-shadow: 0 0 0 10px rgba(28, 43, 80, 0);
-  }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(28, 43, 80, .18); }
+  50% { box-shadow: 0 0 0 10px rgba(28, 43, 80, 0); }
 }
 
 .btn-open:hover {
@@ -528,67 +670,71 @@ a {
 }
 
 @keyframes iconWiggle {
-
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-
-  50% {
-    transform: rotate(-8deg);
-  }
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-8deg); }
 }
 
-/* --- entrance sequence khusus cover: muncul berurutan tiap elemen --- */
-.cover-content>* {
+/* entrance sequence khusus cover */
+.cover-title-block .eyebrow-script {
   opacity: 0;
-  transform: translateY(22px);
-  animation: coverIn 1.1s var(--ease-soft) forwards;
+  transform: translateY(20px);
+  animation: coverIn .9s var(--ease-soft) forwards;
 }
 
-.cover-title-block {
-  animation-delay: .15s;
+.cover-title-block .eyebrow-script:nth-of-type(1) { animation-delay: .2s; }
+.cover-title-block .eyebrow-script:nth-of-type(2) { animation-delay: .35s; }
+
+.couple-names-cover {
+  opacity: 0;
+  transform: translateY(24px) scale(.96);
+  animation: coverIn 1s var(--ease-soft) .5s forwards,
+             nameShimmer 6s ease-in-out 1.5s infinite;
 }
 
-.cover-title-block .eyebrow-script:nth-of-type(1) {
-  animation: coverIn .9s var(--ease-soft) .15s forwards;
+.cover-date {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: coverIn .9s var(--ease-soft) .7s forwards;
 }
 
 .cover-guestcard {
-  animation: coverIn 1.1s var(--ease-soft) .55s forwards, cardFloat 5s ease-in-out 1.7s infinite;
+  opacity: 0;
+  transform: translateY(22px);
+  animation: coverIn 1.1s var(--ease-soft) .9s forwards,
+             cardFloat 5s ease-in-out 2s infinite;
 }
 
 .btn-open {
-  animation: coverIn 1.1s var(--ease-soft) .85s forwards, openPulse 2.4s ease-in-out 2s infinite;
+  opacity: 0;
+  transform: translateY(22px);
+  animation: coverIn 1.1s var(--ease-soft) 1.1s forwards,
+             openPulse 2.4s ease-in-out 2.2s infinite;
 }
 
 @keyframes coverIn {
-  from {
-    opacity: 0;
-    transform: translateY(22px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   .couple-names-cover,
   .cover-guestcard,
   .btn-open,
   .btn-open-icon,
-  .cover-content>*,
-  .divider-orn::before {
+  .cover-content > *,
+  .divider-orn::before,
+  .section-title {
     animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 
-/* ================= HERO (isi.html) ================= */
+/* ============================================================
+   HERO (isi.html)
+   ============================================================ */
 .hero-section {
-  padding-top: 56px;
+  padding: 8px 28px 28px;
 }
 
 .couple-names {
@@ -604,9 +750,11 @@ a {
   color: var(--cover-ink);
 }
 
-/* ================= FOTO BERDUA (sebelum Hero, isi.html) ================= */
+/* ============================================================
+   FOTO BERDUA (sebelum Hero)
+   ============================================================ */
 .couple-photo-section {
-  padding: 44px 24px 6px;
+  padding: 0 24px 10px;
 }
 
 .couple-photo-frame {
@@ -619,15 +767,8 @@ a {
 }
 
 @keyframes gentleFloat {
-
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-
-  50% {
-    transform: translateY(-8px) rotate(.6deg);
-  }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(.6deg); }
 }
 
 .couple-photo-frame::before {
@@ -650,9 +791,11 @@ a {
   transform: scale(1.06);
 }
 
-/* ================= COUNTDOWN ================= */
+/* ============================================================
+   COUNTDOWN
+   ============================================================ */
 .countdown-section {
-  padding-top: 12px;
+  padding: 4px 28px 48px;
 }
 
 .countdown {
@@ -668,7 +811,24 @@ a {
   border-radius: 4px;
   width: 64px;
   padding: 12px 0;
+  position: relative;
+  overflow: hidden;
   transition: transform .25s var(--ease-soft), box-shadow .25s var(--ease-soft);
+}
+
+.cd-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(184, 134, 43, .12) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: cdShimmer 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes cdShimmer {
+  0%, 100% { transform: translateX(-120%); }
+  50% { transform: translateX(120%); }
 }
 
 .cd-box.tick {
@@ -676,18 +836,12 @@ a {
 }
 
 @keyframes cdPulse {
-  0% {
-    transform: scale(1);
-  }
-
+  0% { transform: scale(1); }
   35% {
     transform: scale(1.12);
     box-shadow: 0 6px 16px rgba(184, 134, 43, .28);
   }
-
-  100% {
-    transform: scale(1);
-  }
+  100% { transform: scale(1); }
 }
 
 .cd-box span {
@@ -696,6 +850,7 @@ a {
   font-weight: 600;
   font-size: 24px;
   color: var(--cover-ink);
+  position: relative;
 }
 
 .cd-box label {
@@ -704,36 +859,15 @@ a {
   letter-spacing: .06em;
   color: var(--cover-ink);
   margin-top: 2px;
+  position: relative;
 }
 
-/* ================= QUOTE ================= */
-/* .quote-bg {
-  margin-top: 20px;
-  width: 100vw;
-  margin-left: 50%;
-  transform: translateX(-50%);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-image: url('assets/images/quote-bg.png');
-  padding: 68px 28px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-} */
-
+/* ============================================================
+   QUOTE
+   ============================================================ */
 .quote-section {
   background: transparent;
   color: var(--cover-ink);
-}
-
-.quote-mark {
-  font-size: 52px;
-  color: var(--cover-ink);
-  line-height: .5;
-  margin-bottom: 10px;
 }
 
 .quote-text {
@@ -751,32 +885,23 @@ a {
   text-transform: uppercase;
 }
 
-/* ================= OPENING TEXT ================= */
+/* ============================================================
+   OPENING TEXT & COUPLE
+   ============================================================ */
 .opening-bg {
-  /* Linear gradient transparan (dari putih 80% transparan ke putih 40% transparan) */
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.4) 100%);
-
-  /* Efek blur kaca di belakangnya agar makin cantik (opsional) */
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-
-  /* Bingkai tipis transparan */
   border: 1px solid rgba(255, 255, 255, 0.6);
-
-  /* Bentuk Kapsul/Oval Vertikal */
   border-radius: 200px;
-
-  /* Ukuran & Posisi */
   width: 90%;
   max-width: 340px;
   margin: 0 auto;
   padding: 60px 20px;
 }
 
-/* Mengecilkan jarak teks pembuka & jarak ke foto */
 .opening-section {
   padding: 40px 20px 10px 20px !important;
-  /* Atas 40px, Bawah 10px */
 }
 
 .couple-section {
@@ -784,7 +909,6 @@ a {
   flex-direction: column;
   gap: 3px;
   padding: 10px 20px 40px 20px !important;
-  /* Atas 10px, Bawah 40px */
 }
 
 .opening-text {
@@ -796,13 +920,6 @@ a {
   margin: 0 auto;
 }
 
-/* ================= COUPLE ================= */
-.couple-section {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
 .person-card {
   padding: 10px 0;
 }
@@ -810,7 +927,7 @@ a {
 .person-photo {
   width: 100px;
   height: 120px;
-  margin: 20px auto 20px;
+  margin: 20px auto;
   border-radius: 50% 50% 4px 4px / 42% 42% 4px 4px;
   border: 1px solid var(--gold-soft);
   background-color: var(--bg-alt);
@@ -818,19 +935,15 @@ a {
   background-position: center;
   background-repeat: no-repeat;
   animation: gentleFloat 7s ease-in-out infinite;
-  transition: box-shadow .4s var(--ease);
+  transition: box-shadow .4s var(--ease), transform .6s var(--ease);
 }
 
-.person-card:nth-child(1) .person-photo {
-  animation-delay: 0s;
-}
+.person-card:nth-child(1) .person-photo { animation-delay: 0s; }
+.person-card:nth-child(3) .person-photo { animation-delay: .4s; }
 
-.person-card:nth-child(3) .person-photo {
-  animation-delay: .4s;
-}
-
-.person-photo:hover {
-  box-shadow: 0 0 0 6px rgba(217, 190, 131, .35);
+.person-card:hover .person-photo {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 0 0 6px rgba(217, 190, 131, .35), 0 14px 28px rgba(46, 32, 19, .15);
 }
 
 .person-label {
@@ -867,18 +980,13 @@ a {
 }
 
 @keyframes ampSway {
-
-  0%,
-  100% {
-    transform: rotate(-4deg);
-  }
-
-  50% {
-    transform: rotate(4deg);
-  }
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(4deg); }
 }
 
-/* ================= EVENTS ================= */
+/* ============================================================
+   EVENTS
+   ============================================================ */
 .events-section {
   display: flex;
   flex-direction: column;
@@ -890,7 +998,24 @@ a {
   border: 1px solid var(--gold-soft);
   border-radius: 6px;
   padding: 28px 22px;
+  position: relative;
+  overflow: hidden;
   transition: transform .45s var(--ease-soft), box-shadow .45s var(--ease-soft);
+}
+
+.event-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  transition: left .6s var(--ease);
+}
+
+.event-card:hover::before {
+  left: 100%;
 }
 
 .event-card:hover {
@@ -903,6 +1028,11 @@ a {
   font-size: 21px;
   margin: 0 0 12px;
   color: var(--cover-ink);
+  transition: color .3s var(--ease);
+}
+
+.event-card:hover h3 {
+  color: var(--maroon);
 }
 
 .event-card p {
@@ -921,31 +1051,163 @@ a {
   margin-top: 16px;
 }
 
-/* ================= GALLERY ================= */
+/* ============================================================
+   GALLERY — masonry + hover premium
+   ============================================================ */
+.gallery-section {
+  padding: 52px 20px 60px;
+}
+
+.gallery-sub {
+  font-family: var(--script);
+  font-size: 16px;
+  color: var(--cover-ink);
+  opacity: .75;
+  margin: -16px 0 24px;
+  letter-spacing: .02em;
+}
+
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
+  grid-auto-rows: 90px;
+  gap: 8px;
+  grid-auto-flow: dense;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
+/* ---------- ITEM GALERI ---------- */
 .gallery-item {
-  aspect-ratio: 1/1;
+  position: relative;
   background-size: cover;
   background-position: center;
   background-color: var(--bg-alt);
   cursor: pointer;
-  border-radius: 2px;
-  transition: transform .4s var(--ease-soft), box-shadow .4s var(--ease-soft), filter .4s var(--ease-soft);
+  border-radius: 4px;
+  overflow: hidden;
+  animation: galleryIn .7s var(--ease-soft) both;
+  animation-delay: var(--d, 0s);
+  transition: transform .5s var(--ease-soft),
+              box-shadow .5s var(--ease-soft),
+              filter .5s var(--ease-soft);
+  will-change: transform;
+}
+
+@keyframes galleryIn {
+  from {
+    opacity: 0;
+    transform: scale(.7) translateY(20px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* ---------- Ukuran masonry: featured + tall + wide + normal ---------- */
+.gallery-item:nth-child(6n + 1) {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.gallery-item:nth-child(6n + 4) {
+  grid-row: span 2;
+}
+.gallery-item:nth-child(6n + 5) {
+  grid-column: span 2;
+}
+
+/* ---------- Overlay caption + shine saat hover ---------- */
+.gallery-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    transparent 45%,
+    rgba(28, 43, 80, .55) 100%);
+  opacity: 0;
+  transition: opacity .45s var(--ease-soft);
+  z-index: 1;
+}
+
+.gallery-item::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg,
+    transparent 0%,
+    rgba(255, 255, 255, .35) 50%,
+    transparent 100%);
+  transform: skewX(-20deg);
+  transition: left .7s var(--ease);
+  z-index: 2;
+  pointer-events: none;
 }
 
 .gallery-item:hover {
-  transform: scale(1.05) rotate(-.5deg);
-  box-shadow: 0 8px 18px rgba(46, 32, 19, .22);
-  filter: brightness(1.04);
-  z-index: 2;
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 14px 32px rgba(46, 32, 19, .28),
+              0 0 0 2px var(--gold-soft);
+  filter: brightness(1.05);
+  z-index: 3;
 }
 
-/* ================= GIFT ================= */
+.gallery-item:hover::before {
+  opacity: 1;
+}
+
+.gallery-item:hover::after {
+  left: 125%;
+}
+
+/* ---------- Icon zoom yang muncul saat hover ---------- */
+.gallery-item .gallery-zoom {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(.5);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cover-ink);
+  font-size: 18px;
+  opacity: 0;
+  transition: opacity .35s var(--ease-soft),
+              transform .45s var(--ease-soft);
+  z-index: 4;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .15);
+}
+
+.gallery-item:hover .gallery-zoom {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Kalau layar sentuh, icon zoom selalu kelihatan biar user tau bisa di-tap */
+@media (hover: none) {
+  .gallery-item .gallery-zoom {
+    opacity: .85;
+    transform: translate(-50%, -50%) scale(.85);
+  }
+  .gallery-item::before {
+    opacity: .35;
+  }
+}
+
+/* ============================================================
+   GIFT
+   ============================================================ */
 .gift-desc {
   font-size: 14px;
   line-height: 1.75;
@@ -965,15 +1227,8 @@ a {
 }
 
 @keyframes fadeInGift {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .bank-card,
@@ -1021,7 +1276,9 @@ a {
   margin: 0 0 14px;
 }
 
-/* ================= RSVP ================= */
+/* ============================================================
+   RSVP
+   ============================================================ */
 .rsvp-form {
   display: flex;
   flex-direction: column;
@@ -1052,6 +1309,12 @@ a {
   border-color: var(--gold);
   box-shadow: 0 0 0 3px rgba(184, 134, 43, .18);
   transform: translateY(-1px);
+  animation: inputGlow 1.5s ease-in-out infinite;
+}
+
+@keyframes inputGlow {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(184, 134, 43, .18); }
+  50% { box-shadow: 0 0 0 5px rgba(184, 134, 43, .28); }
 }
 
 .rsvp-form textarea {
@@ -1065,10 +1328,75 @@ a {
   border-radius: 4px;
 }
 
+/* ============================================================
+   WISHES LIST — container scroll
+   ============================================================ */
 .wishes-list {
   max-width: 360px;
   margin: 0 auto;
   text-align: left;
+  max-height: 420px;              /* tinggi maksimal kotak */
+  overflow-y: auto;               /* aktifkan scroll */
+  overflow-x: hidden;
+  padding: 4px 8px 4px 4px;       /* ruang buat scrollbar */
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, .5);
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;   /* biar scroll ga nular ke body */
+}
+
+/* ---------- Scrollbar custom (Webkit: Chrome, Safari, Edge) ---------- */
+.wishes-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.wishes-list::-webkit-scrollbar-track {
+  background: rgba(184, 134, 43, .08);
+  border-radius: 10px;
+}
+
+.wishes-list::-webkit-scrollbar-thumb {
+  background: var(--gold-soft);
+  border-radius: 10px;
+  transition: background .3s var(--ease);
+}
+
+.wishes-list::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
+
+/* ---------- Scrollbar custom (Firefox) ---------- */
+.wishes-list {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-soft) rgba(184, 134, 43, .08);
+}
+
+/* ---------- Gradient fade di atas & bawah ---------- */
+.wishes-list::before,
+.wishes-list::after {
+  content: '';
+  position: sticky;
+  left: 0;
+  right: 0;
+  height: 16px;
+  display: block;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.wishes-list::before {
+  top: 0;
+  background: linear-gradient(180deg, rgba(255, 253, 248, .9) 0%, transparent 100%);
+  margin-bottom: -16px;
+}
+
+.wishes-list::after {
+  bottom: 0;
+  background: linear-gradient(0deg, rgba(255, 253, 248, .9) 0%, transparent 100%);
+  margin-top: -16px;
 }
 
 .wish-card {
@@ -1077,7 +1405,14 @@ a {
   border-radius: 2px;
   padding: 14px 16px;
   margin-bottom: 10px;
+  animation: wishIn .5s var(--ease-soft) both;
+  animation-delay: var(--d, 0s);
   transition: transform .35s var(--ease-soft), box-shadow .35s var(--ease-soft);
+}
+
+@keyframes wishIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 .wish-card:hover {
@@ -1106,20 +1441,9 @@ a {
   white-space: nowrap;
 }
 
-.badge-yes {
-  background: #E4EFE1;
-  color: var(--cover-ink);
-}
-
-.badge-no {
-  background: #F5E2E1;
-  color: var(--cover-ink);
-}
-
-.badge-maybe {
-  background: #F6EED9;
-  color: var(--cover-ink);
-}
+.badge-yes { background: #E4EFE1; color: var(--cover-ink); }
+.badge-no { background: #F5E2E1; color: var(--cover-ink); }
+.badge-maybe { background: #F6EED9; color: var(--cover-ink); }
 
 .wish-msg {
   font-size: 13.5px;
@@ -1150,7 +1474,9 @@ a {
   transform: translateY(-1px);
 }
 
-/* ================= CLOSING ================= */
+/* ============================================================
+   CLOSING
+   ============================================================ */
 .closing-section {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 40%);
   color: var(--cover-ink);
@@ -1166,6 +1492,11 @@ a {
   background-position: center;
   border: 1px solid var(--gold-soft);
   animation: gentleFloat 6.5s ease-in-out infinite;
+  transition: box-shadow .5s var(--ease);
+}
+
+.closing-photo:hover {
+  box-shadow: 0 0 0 8px rgba(217, 190, 131, .25), 0 16px 30px rgba(46, 32, 19, .18);
 }
 
 .closing-section h2 {
@@ -1182,19 +1513,9 @@ a {
   line-height: 1.7;
 }
 
-.footer {
-  text-align: center;
-  padding: 22px;
-  font-size: 12px;
-  color: var(--cover-ink);
-  background: var(--bg);
-}
-
-.footer p {
-  margin: 2px 0;
-}
-
-/* ================= BUTTERFLIES ================= */
+/* ============================================================
+   BUTTERFLIES
+   ============================================================ */
 .butterflies {
   position: fixed;
   inset: 0;
@@ -1210,66 +1531,25 @@ a {
   animation-iteration-count: infinite;
 }
 
-.butterfly-wrap.fly-right {
-  animation-name: flyUpRight;
-}
+.butterfly-wrap.fly-right { animation-name: flyUpRight; }
+.butterfly-wrap.fly-left { animation-name: flyUpLeft; }
 
-.butterfly-wrap.fly-left {
-  animation-name: flyUpLeft;
-}
-
-/* jalur terbang meliuk ke kanan sambil naik ke atas layar */
 @keyframes flyUpRight {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-
-  20% {
-    transform: translate(7vw, -22vh) rotate(12deg);
-  }
-
-  40% {
-    transform: translate(-3vw, -44vh) rotate(-8deg);
-  }
-
-  60% {
-    transform: translate(9vw, -66vh) rotate(10deg);
-  }
-
-  80% {
-    transform: translate(2vw, -88vh) rotate(-7deg);
-  }
-
-  100% {
-    transform: translate(11vw, -112vh) rotate(5deg);
-  }
+  0% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(7vw, -22vh) rotate(12deg); }
+  40% { transform: translate(-3vw, -44vh) rotate(-8deg); }
+  60% { transform: translate(9vw, -66vh) rotate(10deg); }
+  80% { transform: translate(2vw, -88vh) rotate(-7deg); }
+  100% { transform: translate(11vw, -112vh) rotate(5deg); }
 }
 
-/* jalur terbang meliuk ke kiri sambil naik ke atas layar */
 @keyframes flyUpLeft {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-
-  20% {
-    transform: translate(-7vw, -22vh) rotate(-12deg);
-  }
-
-  40% {
-    transform: translate(3vw, -44vh) rotate(8deg);
-  }
-
-  60% {
-    transform: translate(-9vw, -66vh) rotate(-10deg);
-  }
-
-  80% {
-    transform: translate(-2vw, -88vh) rotate(7deg);
-  }
-
-  100% {
-    transform: translate(-11vw, -112vh) rotate(-5deg);
-  }
+  0% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(-7vw, -22vh) rotate(-12deg); }
+  40% { transform: translate(3vw, -44vh) rotate(8deg); }
+  60% { transform: translate(-9vw, -66vh) rotate(-10deg); }
+  80% { transform: translate(-2vw, -88vh) rotate(7deg); }
+  100% { transform: translate(-11vw, -112vh) rotate(-5deg); }
 }
 
 .butterfly {
@@ -1279,17 +1559,9 @@ a {
   animation: butterflyBob 2.1s ease-in-out infinite;
 }
 
-/* naik-turun kecil biar nggak kaku, kayak terbang beneran */
 @keyframes butterflyBob {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-7px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
 }
 
 .butterfly img {
@@ -1301,48 +1573,26 @@ a {
   filter: drop-shadow(0 3px 4px rgba(46, 32, 19, .18));
 }
 
-/* dua gambar (14.png & 15.png) gantian ditampilkan = efek kepak sayap */
-.butterfly .frame-a {
-  animation: bflyFlapA .42s steps(1, end) infinite;
-}
-
-.butterfly .frame-b {
-  animation: bflyFlapB .42s steps(1, end) infinite;
-}
+.butterfly .frame-a { animation: bflyFlapA .42s steps(1, end) infinite; }
+.butterfly .frame-b { animation: bflyFlapB .42s steps(1, end) infinite; }
 
 @keyframes bflyFlapA {
-
-  0%,
-  49% {
-    opacity: 1;
-  }
-
-  50%,
-  100% {
-    opacity: 0;
-  }
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 }
 
 @keyframes bflyFlapB {
-
-  0%,
-  49% {
-    opacity: 0;
-  }
-
-  50%,
-  100% {
-    opacity: 1;
-  }
+  0%, 49% { opacity: 0; }
+  50%, 100% { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .butterflies {
-    display: none;
-  }
+  .butterflies { display: none; }
 }
 
-/* ================= LOADING OVERLAY ================= */
+/* ============================================================
+   LOADING OVERLAY
+   ============================================================ */
 .loading-overlay {
   position: fixed;
   inset: 0;
@@ -1360,9 +1610,7 @@ a {
   pointer-events: none;
 }
 
-.loading-inner {
-  text-align: center;
-}
+.loading-inner { text-align: center; }
 
 .loading-ring {
   width: 44px;
@@ -1375,9 +1623,7 @@ a {
 }
 
 @keyframes loadingSpin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
 .loading-text {
@@ -1395,7 +1641,9 @@ a {
   }
 }
 
-/* ================= QUICK NAV (bottom, isi.html) ================= */
+/* ============================================================
+   QUICK NAV (bottom, isi.html)
+   ============================================================ */
 .quicknav {
   position: fixed;
   left: 50%;
@@ -1444,6 +1692,12 @@ a {
 
 .quicknav-item.active .quicknav-icon {
   transform: scale(1.15);
+  animation: navBounce .5s var(--ease-soft);
+}
+
+@keyframes navBounce {
+  0%, 100% { transform: scale(1.15) translateY(0); }
+  50% { transform: scale(1.25) translateY(-4px); }
 }
 
 .quicknav-icon svg {
@@ -1452,7 +1706,9 @@ a {
   stroke-width: 1.7;
 }
 
-/* ================= CONTROL BAR (isi.html) ================= */
+/* ============================================================
+   CONTROL BAR
+   ============================================================ */
 .control-bar {
   position: fixed;
   left: 50%;
@@ -1484,38 +1740,33 @@ a {
   transition: transform .3s var(--ease);
 }
 
-.ctrl-btn:hover {
-  transform: scale(1.1);
-}
+.ctrl-btn:hover { transform: scale(1.1); }
 
 .ctrl-btn.playing {
   animation: ctrlBeat 1.6s ease-in-out infinite;
 }
 
 @keyframes ctrlBeat {
-
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(107, 30, 35, .35);
-  }
-
-  50% {
-    box-shadow: 0 0 0 8px rgba(107, 30, 35, 0);
-  }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(107, 30, 35, .35); }
+  50% { box-shadow: 0 0 0 8px rgba(107, 30, 35, 0); }
 }
 
-/* ================= LIGHTBOX ================= */
+/* ============================================================
+   LIGHTBOX — premium dengan navigasi
+   ============================================================ */
 .lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(20, 12, 8, .92);
+  background: rgba(15, 10, 6, .95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 200;
   display: none;
   align-items: center;
   justify-content: center;
   padding: 24px;
   opacity: 0;
-  transition: opacity .35s var(--ease-soft);
+  transition: opacity .4s var(--ease-soft);
 }
 
 .lightbox.open {
@@ -1524,34 +1775,125 @@ a {
 }
 
 .lightbox img {
-  max-height: 85vh;
-  border-radius: 4px;
+  max-width: 90vw;
+  max-height: 82vh;
+  border-radius: 6px;
   transform: scale(.9);
   opacity: 0;
-  transition: transform .4s var(--ease-soft), opacity .4s var(--ease-soft);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .5);
+  transition: transform .45s var(--ease-soft),
+              opacity .45s var(--ease-soft);
 }
 
 .lightbox.open img {
   transform: scale(1);
   opacity: 1;
+  animation: lightboxIn .55s var(--ease-soft);
 }
 
-.lightbox button {
+@keyframes lightboxIn {
+  from {
+    transform: scale(.82);
+    opacity: 0;
+    filter: blur(10px);
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* ---------- Tombol close ---------- */
+.lightbox .lightbox-close {
   position: absolute;
   top: 20px;
   right: 20px;
-  background: none;
-  border: none;
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(255, 255, 255, .25);
+  border-radius: 50%;
   color: var(--white);
-  font-size: 26px;
-  transition: transform .3s var(--ease);
+  font-size: 22px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .35s var(--ease),
+              background .35s var(--ease);
+  z-index: 5;
 }
 
-.lightbox button:hover {
-  transform: rotate(90deg);
+.lightbox .lightbox-close:hover {
+  transform: rotate(90deg) scale(1.1);
+  background: rgba(255, 255, 255, .22);
 }
 
-/* ================= TOAST ================= */
+/* ---------- Tombol prev / next ---------- */
+.lightbox .lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(255, 255, 255, .25);
+  border-radius: 50%;
+  color: var(--white);
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .35s var(--ease),
+              background .35s var(--ease);
+  z-index: 5;
+  cursor: pointer;
+}
+
+.lightbox .lightbox-nav:hover {
+  background: rgba(255, 255, 255, .25);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.lightbox .lightbox-prev {
+  left: 16px;
+}
+
+.lightbox .lightbox-next {
+  right: 16px;
+}
+
+/* ---------- Counter foto ---------- */
+.lightbox .lightbox-counter {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(255, 255, 255, .2);
+  color: var(--white);
+  font-size: 12.5px;
+  letter-spacing: .08em;
+  padding: 6px 16px;
+  border-radius: 20px;
+  z-index: 5;
+  backdrop-filter: blur(6px);
+}
+
+@media (max-width: 480px) {
+  .lightbox .lightbox-nav {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+  .lightbox .lightbox-prev { left: 8px; }
+  .lightbox .lightbox-next { right: 8px; }
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
 .toast {
   position: fixed;
   left: 50%;
@@ -1575,12 +1917,10 @@ a {
   transform: translateX(-50%) translateY(0) scale(1);
 }
 
-@media (max-width:360px) {
-  .couple-names-cover {
-    font-size: 36px;
-  }
-
-  .cd-box {
-    width: 56px;
-  }
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 360px) {
+  .couple-names-cover { font-size: 36px; }
+  .cd-box { width: 56px; }
 }
